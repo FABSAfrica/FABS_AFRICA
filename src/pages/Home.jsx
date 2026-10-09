@@ -10,8 +10,9 @@ export default function Home() {
       <Hero />
       <Intro/>
       <UpdatesGrid />
-      <MembershipBand />
       <NewsletterStrip />
+      <MembershipBand />
+
     </>
   );
 }
