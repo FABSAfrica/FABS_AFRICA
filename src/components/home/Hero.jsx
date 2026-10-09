@@ -4,22 +4,16 @@ import Container from "../ui/Container";
 export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-ink text-white">
-      {/* Desktop: autoplaying video. Mobile: poster only (no video payload). */}
+      {/* Background video: autoplays, muted, loops on all screen sizes */}
       <video
-        className="absolute inset-0 hidden h-full w-full object-cover lg:block"
-        src="media/fabsvideo2.mp4"
-        poster="/media/placeholder.png"
+        className="absolute inset-0 h-full w-full object-cover"
+        src="/media/fabsvideo2.mp4"
         autoPlay
         muted
         loop
         playsInline
+        preload="auto"
         aria-hidden="true"
-      />
-      <img
-        src="/media/placeholder.png"
-        alt=""
-        aria-hidden="true"
-        className="absolute inset-0 h-full w-full object-cover lg:hidden"
       />
 
       {/* Gradient tint: darker on the left where the text sits */}
