@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 
 // Counts from `start` to `end` once, when it scrolls into view.
+// `notranslate` stops Google Translate from rewrapping the number, which
+// would detach the node React updates and freeze the counter at 0.
 export default function AnimatedCounter({
   start = 1,
   end = 40,
@@ -51,7 +53,7 @@ export default function AnimatedCounter({
   }, [inView, start, end, duration]);
 
   return (
-    <span ref={ref}>
+    <span ref={ref} translate="no" className="notranslate">
       {value}
       {suffix}
     </span>

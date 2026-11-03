@@ -55,3 +55,25 @@ select:focus-visible {
     scroll-behavior: auto !important;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* Google Translate: hide its banner, widget and highlight effects     */
+/* ------------------------------------------------------------------ */
+#google_translate_element,
+.goog-te-banner-frame,
+.skiptranslate iframe,
+iframe.skiptranslate,
+#goog-gt-tt,
+.goog-te-balloon-frame {
+  display: none !important;
+}
+
+/* Google pushes the page down to make room for its banner; undo that. */
+body {
+  top: 0 !important;
+}
+
+.goog-text-highlight {
+  background: none !important;
+  box-shadow: none !important;
+}

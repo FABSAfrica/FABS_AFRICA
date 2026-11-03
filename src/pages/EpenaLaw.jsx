@@ -94,7 +94,10 @@ function StatCard({ stat, delay }) {
         </span>
 
         {stat.suffix && (
-          <span className="text-base font-semibold text-brand sm:text-lg">
+          <span
+            className="notranslate text-base font-semibold text-brand sm:text-lg"
+            translate="no"
+          >
             {stat.suffix}
           </span>
         )}

@@ -17,6 +17,7 @@ import {
 } from "../../data/navigation";
 import Container from "../ui/Container";
 import SocialLinks from "../ui/SocialIcons";
+import LanguageSwitcher from "../ui/LanguageSwitcher";
 import MobileNav from "./MobileNav";
 
 // Colour rules for items that have a dropdown:
@@ -208,7 +209,9 @@ export default function Header() {
             <div className="flex items-center gap-4">
               <SocialLinks />
 
-              <label htmlFor="lang-select" className="sr-only">
+              <LanguageSwitcher variant="select" />
+
+              {/* <label htmlFor="lang-select" className="sr-only">
                 Language
               </label>
 
@@ -219,7 +222,7 @@ export default function Header() {
               >
                 <option value="en">English</option>
                 <option value="fr">Français</option>
-              </select>
+              </select> */}
             </div>
           </div>
         </Container>

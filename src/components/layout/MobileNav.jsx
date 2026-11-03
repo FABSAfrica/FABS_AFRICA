@@ -1,8 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { X, ChevronDown, Phone, Mail } from "lucide-react";
-import { nav, registerLink, contactLink, contactInfo } from "../../data/navigation";
+import {
+  nav,
+  registerLink,
+  contactLink,
+  contactInfo,
+} from "../../data/navigation";
 import SocialLinks from "../ui/SocialIcons";
+import LanguageSwitcher from "../ui/LanguageSwitcher";
 
 // Recursive accordion row so any depth of nav nesting works — we currently
 // need two levels: Past Events -> FABS 2025 -> [Road To FABS 2025, FABS 2025].
@@ -107,6 +113,10 @@ export default function MobileNav({ open, onClose }) {
               <MobileNavItem item={contactLink} onNavigate={onClose} />
             </li>
           </ul>
+
+          <div className="mt-4 pt-4 border-t border-line">
+            <LanguageSwitcher variant="buttons" />
+          </div>
 
           <div className="mt-4 pt-4 border-t border-line space-y-1 text-sm text-ink-soft">
             <a
