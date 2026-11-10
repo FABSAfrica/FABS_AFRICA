@@ -17,7 +17,6 @@ import {
 } from "../../data/navigation";
 import Container from "../ui/Container";
 import SocialLinks from "../ui/SocialIcons";
-import LanguageSwitcher from "../ui/LanguageSwitcher";
 import MobileNav from "./MobileNav";
 
 // Colour rules for items that have a dropdown:
@@ -173,13 +172,7 @@ export default function Header() {
   };
 
   return (
-    <header
-      className={`sticky top-0 z-40 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/85 shadow-lg shadow-black/5 backdrop-blur-xl"
-          : "bg-white"
-      }`}
-    >
+    <header className="sticky top-0 z-40 transition-all duration-300">
       {/* Contact bar */}
       <div
         className={`hidden overflow-hidden bg-gradient-to-r from-brand-dark via-brand to-brand-dark text-white transition-all duration-300 xl:block ${
@@ -209,9 +202,7 @@ export default function Header() {
             <div className="flex items-center gap-4">
               <SocialLinks />
 
-              <LanguageSwitcher variant="select" />
-
-              {/* <label htmlFor="lang-select" className="sr-only">
+              <label htmlFor="lang-select" className="sr-only">
                 Language
               </label>
 
@@ -222,18 +213,22 @@ export default function Header() {
               >
                 <option value="en">English</option>
                 <option value="fr">Français</option>
-              </select> */}
+              </select>
             </div>
           </div>
         </Container>
       </div>
 
-      {/* Main nav */}
-      <div className="border-b border-line/70">
+      {/* Main nav: 70% opaque white (30% transparent), height reduced by 20% */}
+      <div
+        className={`border-b border-line/70 bg-white/70 transition-all duration-300 ${
+          scrolled ? "shadow-lg shadow-black/5 backdrop-blur-xl" : ""
+        }`}
+      >
         <Container>
           <div
             className={`flex items-center justify-between transition-all duration-300 ${
-              scrolled ? "h-16 xl:h-[72px]" : "h-20 xl:h-24"
+              scrolled ? "h-[51px] xl:h-[58px]" : "h-16 xl:h-[77px]"
             }`}
           >
             <Link

@@ -1,14 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { X, ChevronDown, Phone, Mail } from "lucide-react";
-import {
-  nav,
-  registerLink,
-  contactLink,
-  contactInfo,
-} from "../../data/navigation";
+import { nav, registerLink, contactLink, contactInfo } from "../../data/navigation";
 import SocialLinks from "../ui/SocialIcons";
-import LanguageSwitcher from "../ui/LanguageSwitcher";
 
 // Recursive accordion row so any depth of nav nesting works — we currently
 // need two levels: Past Events -> FABS 2025 -> [Road To FABS 2025, FABS 2025].
@@ -68,7 +62,13 @@ function MobileNavItem({ item, level = 0, onNavigate }) {
 }
 
 export default function MobileNav({ open, onClose }) {
+  const { pathname } = useLocation();
+
   if (!open) return null;
+
+  // Hide the Register button while the visitor is already on the register page.
+  const isRegisterPage =
+    pathname === registerLink.path || pathname === `${registerLink.path}/`;
 
   return (
     <div className="fixed inset-0 z-50 xl:hidden">
@@ -114,10 +114,6 @@ export default function MobileNav({ open, onClose }) {
             </li>
           </ul>
 
-          <div className="mt-4 pt-4 border-t border-line">
-            <LanguageSwitcher variant="buttons" />
-          </div>
-
           <div className="mt-4 pt-4 border-t border-line space-y-1 text-sm text-ink-soft">
             <a
               href={contactInfo.phoneHref}
@@ -139,15 +135,17 @@ export default function MobileNav({ open, onClose }) {
           </div>
         </nav>
 
-        <div className="p-5 border-t border-line shrink-0">
-          <Link
-            to={registerLink.path}
-            onClick={onClose}
-            className="flex items-center justify-center bg-gradient-to-r from-brand to-accent text-white font-semibold py-3.5 w-full"
-          >
-            {registerLink.label}
-          </Link>
-        </div>
+        {!isRegisterPage && (
+          <div className="p-5 border-t border-line shrink-0">
+            <Link
+              to={registerLink.path}
+              onClick={onClose}
+              className="flex items-center justify-center bg-gradient-to-r from-brand to-accent text-white font-semibold py-3.5 w-full"
+            >
+              {registerLink.label}
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

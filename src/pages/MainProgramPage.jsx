@@ -112,7 +112,7 @@ export default function MainProgramPage() {
                 </svg>
               </a>
 
-              <a
+              {/* <a
                 href="/register"
                 className="inline-flex items-center gap-1.5 rounded-full border-2 border-red-800 px-4 py-2 text-xs font-bold text-red-800 transition hover:bg-red-800 hover:text-white"
               >
@@ -129,7 +129,7 @@ export default function MainProgramPage() {
                 >
                   <path d="M5 12h14m-6-6 6 6-6 6" />
                 </svg>
-              </a>
+              </a> */}
             </div>
           </div>
 
