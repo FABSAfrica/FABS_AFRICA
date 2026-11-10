@@ -52,9 +52,9 @@ export const nav = [
       { label: "Photo Gallery", path: "/resources/photo-gallery" },
       { label: "Video Gallery", path: "/resources/video-gallery" },
       // { label: "Epena Company Profile", path: "/resources/epena-company-profile" },
-      { label: "Travel", path: ROUTES.travel },
-      { label: "Accommodation", path: ROUTES.accommodation },
-      { label: "Sponsorship", path: ROUTES.sponsorship },
+      // { label: "Travel", path: ROUTES.travel },
+      // { label: "Accommodation", path: ROUTES.accommodation },
+      // { label: "Sponsorship", path: ROUTES.sponsorship },
     ],
   },
   {

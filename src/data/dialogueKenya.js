@@ -15,7 +15,7 @@ export const dialogueKenya = {
       "The Kenya edition will explore opportunities for cross-border trade, investment and strategic partnerships, with discussions centred on financial services, agribusiness, consumer markets and other areas of shared commercial interest.",
     brochure: {
       label: "Download our brochure",
-      href: "/media/fabs-kenya-2026-brochure.pdf",
+      href: "/media/The_Dialogue_by_FABS_Kenya_Edition_Programme.pdf",
     },
   },
   attendees: {
