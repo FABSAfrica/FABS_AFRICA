@@ -28,11 +28,13 @@ export const ROUTES = {
   fabs2025Speakers: "/past-events/fabs-2025/speakers",
   roadToFabs2025: "/past-events/fabs-2025/road-to-fabs-2025",
   drcSipAndLearn: "/past-events/fabs-2025/road-to-fabs-2025/drc-sip-and-learn",
+  dialogueKenya: "/the-dialogue-by-fabs-kenya-edition",
 };
 
 export const nav = [
   { label: "About", path: ROUTES.about, children: null },
   { label: "Epena Law", path: ROUTES.epenaLaw, children: null },
+  { label: "The Dialogue: Kenya 2026", path: "/the-dialogue-by-fabs-kenya-edition", children: null },
   {
     label: "Insights",
     path: "/insights",
