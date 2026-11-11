@@ -15,6 +15,7 @@ import {
   contactInfo,
   isNavLink,
 } from "../../data/navigation";
+import { LANGUAGES, getCurrentLang, setLang } from "../../lib/translate";
 import Container from "../ui/Container";
 import SocialLinks from "../ui/SocialIcons";
 import MobileNav from "./MobileNav";
@@ -31,17 +32,47 @@ const rowBase =
 // Plain leaf link
 const rowClass = `${rowBase} text-ink hover:bg-brand/5 hover:text-brand`;
 
+const dropdownPanel =
+  "rounded-2xl border border-line bg-white p-2 shadow-2xl ring-1 ring-black/5";
+
+// Language switcher. Picking a language writes the googtrans cookie and
+// reloads the page (see lib/translate.js). The cookie is a session cookie,
+// so the choice persists across pages until the browser is closed.
+function LangSelect({ className = "", id }) {
+  const [lang] = useState(() => getCurrentLang());
+
+  return (
+    <select
+      id={id}
+      value={lang}
+      onChange={(e) => setLang(e.target.value)}
+      translate="no"
+      className={`notranslate cursor-pointer ${className}`}
+    >
+      {LANGUAGES.map((l) => (
+        <option key={l.code} value={l.code}>
+          {l.label}
+        </option>
+      ))}
+    </select>
+  );
+}
+
 // A single dropdown row. Three cases:
 //  1. no children             -> plain link
 //  2. children + clickable    -> yellow link that also opens a flyout
 //  3. children, not clickable -> grey button that only opens the flyout
-const dropdownPanel =
-  "rounded-2xl border border-line bg-white p-2 shadow-2xl ring-1 ring-black/5";
-
 function DropdownChild({ child, onNavigate }) {
   const [subOpen, setSubOpen] = useState(false);
   const closeTimer = useRef(null);
   const hasChildren = !!child.children?.length;
+
+  // Clear any pending timer when this row unmounts
+  useEffect(() => {
+    return () => {
+      if (closeTimer.current) clearTimeout(closeTimer.current);
+    };
+  }, []);
 
   const openSub = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -49,6 +80,7 @@ function DropdownChild({ child, onNavigate }) {
   };
 
   const scheduleCloseSub = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
     closeTimer.current = setTimeout(() => setSubOpen(false), 120);
   };
 
@@ -152,12 +184,20 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Clear any pending timer on unmount
+  useEffect(() => {
+    return () => {
+      if (closeTimer.current) clearTimeout(closeTimer.current);
+    };
+  }, []);
+
   const openMenu = (idx) => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
     setOpenIndex(idx);
   };
 
   const scheduleClose = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
     closeTimer.current = setTimeout(() => setOpenIndex(null), 120);
   };
 
@@ -173,7 +213,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-40 transition-all duration-300">
-      {/* Contact bar */}
+      {/* Contact bar (desktop only) */}
       <div
         className={`hidden overflow-hidden bg-gradient-to-r from-brand-dark via-brand to-brand-dark text-white transition-all duration-300 xl:block ${
           scrolled ? "max-h-0" : "max-h-14"
@@ -206,20 +246,16 @@ export default function Header() {
                 Language
               </label>
 
-              <select
+              <LangSelect
                 id="lang-select"
-                defaultValue="en"
-                className="min-w-[100px] cursor-pointer rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs font-medium text-white backdrop-blur focus:outline-none focus:ring-2 focus:ring-white/40 [&>option]:text-ink"
-              >
-                <option value="en">English</option>
-                <option value="fr">Français</option>
-              </select>
+                className="min-w-[100px] rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs font-medium text-white backdrop-blur focus:outline-none focus:ring-2 focus:ring-white/40 [&>option]:text-ink"
+              />
             </div>
           </div>
         </Container>
       </div>
 
-      {/* Main nav: 70% opaque white (30% transparent), height reduced by 20% */}
+      {/* Main nav: 70% opaque white (30% transparent) */}
       <div
         className={`border-b border-line/70 bg-white/70 transition-all duration-300 ${
           scrolled ? "shadow-lg shadow-black/5 backdrop-blur-xl" : ""
@@ -254,8 +290,9 @@ export default function Header() {
                 const hasMenu = !!item.children?.length;
                 const isOpen = openIndex === idx;
                 const sectionActive =
-                  pathname === item.path ||
-                  pathname.startsWith(item.path + "/");
+                  !!item.path &&
+                  (pathname === item.path ||
+                    pathname.startsWith(item.path + "/"));
 
                 return (
                   <div
@@ -318,7 +355,7 @@ export default function Header() {
                         <ul className={`relative ${dropdownPanel}`}>
                           {item.children.map((child) => (
                             <DropdownChild
-                              key={child.path}
+                              key={child.path ?? child.label}
                               child={child}
                               onNavigate={() => setOpenIndex(null)}
                             />
@@ -338,8 +375,19 @@ export default function Header() {
               </NavLink>
             </nav>
 
-            {/* Register button and mobile menu */}
+            {/* Register button, mobile language switcher and mobile menu */}
             <div className="flex items-center gap-3">
+              {/* Visible below xl, where the contact bar is hidden */}
+              <div className="xl:hidden">
+                <label htmlFor="lang-select-mobile" className="sr-only">
+                  Language
+                </label>
+                <LangSelect
+                  id="lang-select-mobile"
+                  className="rounded-full border border-line bg-white px-3 py-1.5 text-xs font-medium text-ink focus:outline-none focus:ring-2 focus:ring-brand/30"
+                />
+              </div>
+
               <Link
                 to={registerLink.path}
                 className="group hidden items-center gap-2 rounded-full bg-gradient-to-r from-brand to-accent px-6 py-3 text-[15px] font-semibold text-white shadow-lg shadow-brand/25 transition hover:-translate-y-0.5 hover:shadow-xl xl:inline-flex"

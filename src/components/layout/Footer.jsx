@@ -34,7 +34,7 @@ function LinkColumn({ title, links }) {
 export default function Footer() {
   return (
     <footer className="bg-ink text-white">
-      <Container className="py-14 sm:py-16">
+      <Container className="py-4 sm:py-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           <LinkColumn title="About FABS" links={footerAbout} />
 
